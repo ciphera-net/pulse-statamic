@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         failOnWarning="true"
+         failOnDeprecation="false">
+    <testsuites>
+        <!-- Zero Statamic dependency: TagBuilder is a pure PHP class, so this
+             suite needs nothing beyond phpunit/phpunit and runs on any PHP
+             toolchain, including this repository's local one. -->
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <!-- Boots a real (headless) Statamic app via Orchestra Testbench, the
+             same way Statamic's own addons are tested. Needs statamic/cms and
+             orchestra/testbench, which is a much heavier install — see
+             RELEASING.md for whether this ran locally or is left to the
+             Docker harness. -->
+        <testsuite name="Feature">
+            <directory>tests/Feature</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>src</directory>
+        </include>
+    </source>
+</phpunit>
