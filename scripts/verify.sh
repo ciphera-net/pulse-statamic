@@ -96,9 +96,21 @@ docker run --rm --name "$BUILD_CONTAINER" \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     composer create-project "statamic/statamic:'"$STATAMIC_CONSTRAINT"'" . --no-interaction --no-progress --prefer-dist
     php artisan key:generate --force
-    cp -R /addon /site-addon
-    rm -rf /site-addon/vendor /site-addon/.git
-    composer config repositories.pulse path /site-addon --no-interaction
+    # The addon source must live INSIDE /site (the persisted named volume),
+    # never on the build container'"'"'s own writable layer. A composer path
+    # repository installs its package as a symlink back to the source
+    # directory by default, and that symlink is resolved by every later
+    # container that mounts this same volume — including the separate "app"
+    # container that actually serves the site. A source directory outside
+    # /site (the original /site-addon here) is destroyed the instant this
+    # --rm build container exits, leaving a dangling symlink the app
+    # container can never follow: composer reports success, the install
+    # looks clean, and the first request fatals in the autoloader. Found by
+    # running this script for the first time, confirmed with
+    # `readlink vendor/ciphera/statamic-pulse-analytics` before this fix.
+    cp -R /addon /site/.pulse-addon-src
+    rm -rf /site/.pulse-addon-src/vendor /site/.pulse-addon-src/.git
+    composer config repositories.pulse path /site/.pulse-addon-src --no-interaction
     composer require ciphera/statamic-pulse-analytics:@dev --no-interaction --no-progress -W
   '
 
@@ -110,10 +122,17 @@ docker run -d --name "$APP_CONTAINER" \
   -w /site \
   "$PHP_IMAGE" php artisan serve --host=0.0.0.0 --port=8080 >/dev/null
 
+SERVER_UP=0
 for _ in $(seq 1 40); do
-  curl -sf -o /dev/null "http://127.0.0.1:${HTTP_PORT}/" && break
+  curl -sf -o /dev/null "http://127.0.0.1:${HTTP_PORT}/" && { SERVER_UP=1; break; }
   sleep 1
 done
+if [ "$SERVER_UP" -ne 1 ]; then
+  echo "REFUSING: the app container never answered a request after 40s — it is not just slow, something crashed on first request"
+  echo "--- docker logs ${APP_CONTAINER} ---"
+  docker logs "$APP_CONTAINER" 2>&1 | tail -40
+  exit 1
+fi
 
 FAILURES=0
 CORE='https://js\.ciphera\.net/script\.js'
