@@ -91,28 +91,69 @@ with a comment explaining why that normalisation is safe here and would not
 be if the difference were in an attribute's own serialisation rather than
 inter-tag whitespace.
 
-## `scripts/verify.sh` — written, not run
+## `scripts/verify.sh` — run for real against Docker, 14-10-2026: GREEN
 
-This task's constraints forbid running Docker, and the real-install harness
-needs it (a full `statamic/statamic` site has no SQLite-only shortcut the way
-TYPO3's harness does, but it does need no database at all — Statamic's
-default storage is flat files, so there is one fewer moving part than the
-Drupal/Joomla/TYPO3 siblings). `scripts/verify.sh` is written from the same
-facts this file already states — the real settings file path, the real
-addon-id string, the real Antlers-is-always-trusted behaviour of an actual
-rendered page — but it has not been exercised against a live container.
-**Run it before trusting it**, and expect the first run to need at least one
-fix: the layout-file-shape assumption it names inline is the most likely
-place.
+Run against a real `statamic/statamic` site (`statamic/cms v6.5.2` the first
+time, `v6.35.1` on later runs — `^6.0` floats, both are within it) built with
+`composer create-project` inside `php:8.3-cli`, exactly as the script
+describes. **It needed two fixes on first run, both in the harness, neither
+in the addon** — each confirmed with a standalone control before anything
+was changed, per this file's own practice elsewhere:
+
+1. **The addon source was copied to `/site-addon`, outside the persisted
+   `$VOLUME` mounted at `/site`.** Composer's path-repository install
+   symlinks `vendor/ciphera/statamic-pulse-analytics` back to that path by
+   default; the symlink is dangling the instant the `--rm` build container
+   exits, so the separate serving container fatals in the autoloader on the
+   very first request. `readlink vendor/ciphera/statamic-pulse-analytics`
+   showed the dangling absolute path before the fix. Fixed by copying the
+   addon source to `/site/.pulse-addon-src`, inside the volume.
+2. **`check()`'s single-tag assertions anchor with `$`, and
+   `grep -oE ... | tr '\n' ' '` leaves a trailing space after the LAST match,
+   not just between matches** — `printf '<script…></script>\n' | grep -oE … |
+   tr '\n' ' ' | od -c` showed the trailing `0x20` on a single known line
+   before anything was touched. That byte was never in the real HTML; it
+   broke the "no domain configured" and "invalid domain dropped" cases even
+   though both were shipping correctly. Fixed by trimming the one trailing
+   separator `tr` adds.
+
+With both fixed:
 
 ```bash
-./scripts/verify.sh            # normal mode: every case must pass
-./scripts/verify.sh --mutate   # proves the invalid-domain guard is real
+./scripts/verify.sh
+# ...
+# Statamic ^6.0: ALL CHECKS PASSED
+
+./scripts/verify.sh --mutate
+# ...
+# MUTATION PROVED THE GUARD IS REAL (2 check(s) went red, as expected)
 ```
+
+`--mutate` also confirmed the SECOND guard holds on its own: with
+`isValidDomain()` patched to accept everything, the malicious domain is
+injected but `htmlspecialchars()` still escapes it
+(`data-domain="bad&quot; onload=&quot;x"` — no live `onload=` attribute), so
+a validation-guard bypass alone does not become script injection. A plain
+normal run afterward confirmed teardown is not one-shot: the harness is
+green again with no state left over from the mutated run.
+
+Independently (not using the harness) a fresh `composer install` at the
+addon's stated PHP floor (`php:8.2-cli`, clean container, no reused `vendor/`)
+resolves `statamic/cms v6.35.1` / `orchestra/testbench v10.12.0` /
+`laravel/framework v12.70.0` — the same versions this file's "Local
+verification" section above measured on the host's PHP 8.5 — and both
+suites pass: **25 tests, 50 assertions**. (Reusing the HOST's already-built
+`vendor/` inside an older PHP container instead throws Composer's own
+`platform_check.php` error, because the host's resolution picked up Symfony
+components requiring PHP ≥8.4.1 — expected behaviour of a lock file built on
+a newer interpreter, not a defect: `composer.lock` is gitignored and not
+shipped, so a real clone always resolves against whatever PHP is actually
+running it.)
 
 Every container, volume and network it creates is named
 `pulse-verify-statamic-*`; teardown removes exactly those four resources by
-name and never prunes.
+name and never prunes, confirmed empty (`docker ps -a` / `volume ls` /
+`network ls --filter name=pulse-verify-statamic`) after every run above.
 
 ## Licence: Apache-2.0 — unforced, unlike three siblings in this queue
 
