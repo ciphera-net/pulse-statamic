@@ -155,7 +155,17 @@ YAML
 check() {
   local html tags
   html=$(curl -s "http://127.0.0.1:${HTTP_PORT}/")
+  # tr '\n' ' ' turns EVERY newline grep emits into a space, including the one
+  # after the last match — so a single-tag page comes back with a trailing
+  # space that was never in the real HTML. Confirmed with a standalone control
+  # (`printf '<script...></script>\n' | grep -oE ... | tr '\n' ' ' | od -c`)
+  # before touching this: the trailing space is this pipeline's own artifact,
+  # not a byte the platform ships. The must-match patterns below anchor with
+  # $, so that artifact failed two real, correct cases. Strip exactly the one
+  # trailing separator tr adds; a real multi-tag page still joins with single
+  # spaces between tags, unaffected.
   tags=$(printf '%s' "$html" | grep -oE '<script[^>]*ciphera[^>]*></script>' | tr '\n' ' ')
+  tags="${tags% }"
   if printf '%s' "$tags" | grep -qE "$2"; then
     echo "    ✅ $1"
   else
