@@ -1,0 +1,56 @@
+{
+    "name": "ciphera/statamic-pulse-analytics",
+    "description": "Privacy-first web analytics. No cookies, no personal data, and the script it adds to your pages is under 3 KB.",
+    "type": "statamic-addon",
+    "license": "Apache-2.0",
+    "keywords": [
+        "statamic",
+        "statamic-addon",
+        "analytics",
+        "privacy"
+    ],
+    "authors": [
+        {
+            "name": "Ciphera BV",
+            "homepage": "https://ciphera.net"
+        }
+    ],
+    "support": {
+        "email": "support@ciphera.net",
+        "issues": "https://github.com/ciphera-net/pulse-statamic/issues",
+        "source": "https://github.com/ciphera-net/pulse-statamic"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ciphera\\StatamicPulseAnalytics\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ciphera\\StatamicPulseAnalytics\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "statamic": {
+            "name": "Pulse Analytics",
+            "description": "Privacy-first web analytics. No cookies, no personal data, and the script it adds to your pages is under 3 KB."
+        },
+        "laravel": {
+            "providers": [
+                "Ciphera\\StatamicPulseAnalytics\\ServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "php": "^8.2",
+        "statamic/cms": "^6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.0",
+        "phpunit/phpunit": "^11.5"
+    },
+    "minimum-stability": "stable",
+    "config": {
+        "sort-packages": true
+    }
+}
