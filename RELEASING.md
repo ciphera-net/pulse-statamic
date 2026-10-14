@@ -1,11 +1,12 @@
 # Releasing statamic-pulse-analytics
 
-## Status: built and verified locally, 14-10-2026 — not yet published anywhere
+## Status: on Packagist since 14-10-2026 — not yet on the Statamic Marketplace
 
-No tag, no Packagist listing, no Statamic Marketplace product. This file
-records the exact steps and the account each one needs, written before any of
-them have been taken, the same shape as `pulse-typo3`'s and `pulse-joomla`'s
-`RELEASING.md` before their first release.
+`v1.0.0` is tagged and `composer require ciphera/statamic-pulse-analytics`
+resolves from Packagist (account `ciphera`; a GitHub push hook keeps the
+listing current, so a new tag needs no manual step). The Statamic Marketplace
+product (step 3 below) still needs a statamic.com seller account. The steps
+below were written before the first release and are kept as the record.
 
 ## Platform version targeted
 
