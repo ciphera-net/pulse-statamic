@@ -76,6 +76,25 @@ registered for the same domain. The free plan is enough to start — one site,
 `https://github.com/ciphera-net/pulse-statamic` (not yet created — see
 Status above).
 
+## Icon
+
+`icon.svg` in the repository root is the addon's icon: the Pulse mark on the
+dark ground `#0a0a0a`, 512 x 512, copied byte for byte from the brand
+library (`https://cdn.ciphera.net/brand/v7/kit/statamic/pulse/icon.svg`,
+SHA-256 `d9295298ebc311bee6b10977adc24fca9f899aa641cb4aa31cda6832e18f3264`).
+
+The Marketplace does not read it from the repository. A product's image is
+uploaded in the seller account and served from statamic.com's own storage
+(`/storage/products/<hash>.png`), and the product page draws it at 64 px,
+96 px on wider screens, with rounded corners and `object-fit: cover`
+(measured on three live product pages, 19-10-2026). So upload a PNG export
+of `icon.svg` when the product is created. The mark keeps at least 18 % of
+the image clear on every side, so the rounded corners never touch it.
+The three first-party addon repositories checked (`statamic/importer`,
+`statamic/ssg`, `statamic/eloquent-driver`) ship no Marketplace icon either;
+`statamic/importer`'s `resources/svg/icon.svg` is its Control Panel
+navigation icon.
+
 ## Screenshots needed
 
 Statamic Marketplace product pages are driven by screenshots far more than
