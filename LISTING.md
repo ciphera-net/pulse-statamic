@@ -24,12 +24,12 @@ against the live submission form.
 
 **Short description** (card/search-result length):
 
-> Privacy-first web analytics. No cookies, no personal data, and the script it adds to your pages is under 3 KB.
+> Privacy-first web analytics. No cookies, no IP addresses stored, and the script it adds to your pages is under 3 KB.
 
 **Long description:**
 
 Pulse Analytics adds privacy-first web analytics to a Statamic site with one
-addon. It sets no cookies, stores no personal data, and the script it adds to
+addon. It sets no cookies, never stores IP addresses, and the script it adds to
 your pages is under 3 KB.
 
 How it works
@@ -118,7 +118,7 @@ this task.
 
 Same facts as every other public Pulse integration's listing: Pulse Analytics
 is built by Ciphera BV, a company in Belgium; data is hosted in Switzerland;
-no cookies, no personal data stored; the tracking script is under 3 KB
+no cookies, no IP addresses stored; the tracking script is under 3 KB
 gzipped; free plan is one site, 5,000 pageviews a month, no card; Business
 plan from €11/month; every feature on every plan. Never a legal claim such as
 "GDPR compliant", "no tracking" or "no consent banner needed", and never a

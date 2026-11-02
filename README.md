@@ -1,7 +1,7 @@
 # Pulse Analytics for Statamic
 
 Privacy-first analytics for a Statamic site, in one addon. No cookies, no
-personal data, and the script it adds to your pages is under 3 KB.
+IP addresses stored, and the script it adds to your pages is under 3 KB.
 
 [Pulse Analytics](https://pulse.ciphera.net) is built by
 [Ciphera](https://ciphera.net), a company in Belgium, and hosted in
@@ -105,7 +105,7 @@ is visible in the source you already own.
 ## What Pulse Analytics measures
 
 Pageviews, referrers, countries, devices, time on page and scroll depth, plus
-goals, funnels and campaigns. It sets no cookies and stores no personal data.
+goals, funnels and campaigns. It sets no cookies and never stores IP addresses.
 Visitors whose browser sends Do Not Track or Global Privacy Control are not
 counted at all — so if you test in Brave or Firefox and see nothing, that is
 the tracker behaving correctly. Safari is the easiest browser to verify an
