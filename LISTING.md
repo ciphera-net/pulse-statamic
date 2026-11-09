@@ -6,8 +6,8 @@ control the product page itself does not. Keep it in step with the addon.
 **Status:** 🔴 **NOT YET SUBMITTED.** No statamic.com seller account exists
 (see `RELEASING.md`), and a Marketplace product is created in the
 seller dashboard. The package it links is ready:
-`ciphera/statamic-pulse-analytics` serves v1.0.1 on Packagist, and the GitHub
-repository is public. Nothing in this file has been tested against the live
+`ciphera/statamic-pulse-analytics` is on Packagist, the GitHub repository is
+public, and the three screenshots below are captured. Nothing in this file has been tested against the live
 submission form.
 
 ## Prerequisites, as of 09-11-2026
@@ -80,24 +80,16 @@ The three first-party addon repositories checked (`statamic/importer`,
 `statamic/importer`'s `resources/svg/icon.svg` is its Control Panel
 navigation icon.
 
-## Screenshots needed
+## Screenshots
 
-Statamic Marketplace product pages are driven by screenshots far more than
-JED or drupal.org's text-heavy listings. At minimum, before submitting:
+Three screenshots were captured on 09-11-2026 from a real Statamic 6 site running the addon at 1.0.2. They are
+kept outside this repository.
 
-1. **The Control Panel settings page** (Tools → Addons → Pulse Analytics)
-   showing the three fields — Domain, the companion toggle, Custom API
-   origin — with their instructions text visible.
-2. **A validation error on a mistyped domain**, to show the save-time check
-   rather than describe it.
-3. **The `{{ pulse:tracker }}` line in a layout file**, in a code editor or
-   the Statamic Control Panel's own file view, to make the one-line
-   integration visible rather than asserted.
-
-None of these exist yet — they need a real Control Panel session against a
-site with this addon installed, which needs the Docker harness
-(`scripts/verify.sh`) or an equivalent local install, neither done as part of
-this task.
+1. **The settings page** (Addons → Pulse Analytics, 2560 x 1600), saved with the domain `example.com`.
+2. **A validation error** (2560 x 1600): the same page after saving `example com`, which Statamic refuses with
+   "Format is invalid." before anything is stored.
+3. **The layout file** (2750 x 895): `resources/views/layout.antlers.html` with `{{ pulse:tracker }}` on line 9,
+   inside `<head>`.
 
 ## What stays true regardless of where this is submitted
 
