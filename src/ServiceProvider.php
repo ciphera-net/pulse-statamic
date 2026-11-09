@@ -29,7 +29,7 @@ class ServiceProvider extends AddonServiceProvider
                                         'field' => [
                                             'type' => 'text',
                                             'display' => 'Domain',
-                                            'instructions' => "The domain this site is registered under in [Pulse Analytics](https://pulse.ciphera.net), for example `example.com`. Leave empty to let the tracker use the browser's own hostname, which is correct for a site served on one domain.",
+                                            'instructions' => "Enter the domain this site is registered under in [Pulse Analytics](https://pulse.ciphera.net), for example `example.com`. If you leave it empty, the tracker uses the browser's own hostname, which is right for a site served on one domain.",
                                             'placeholder' => 'example.com',
                                             'width' => 50,
                                             // A mistyped domain is rejected here, at save time, rather
@@ -45,7 +45,7 @@ class ServiceProvider extends AddonServiceProvider
                                         'field' => [
                                             'type' => 'toggle',
                                             'display' => 'Record clicks, copies and form submits',
-                                            'instructions' => "Loads a second, separate script. It is a second request on purpose — the core script's size is a published claim, and nothing is folded into it to make a feature look free.",
+                                            'instructions' => 'This adds a second script as a separate request, so your pages only load it when you switch this on.',
                                             'default' => false,
                                             'width' => 50,
                                         ],
@@ -55,7 +55,7 @@ class ServiceProvider extends AddonServiceProvider
                                         'field' => [
                                             'type' => 'text',
                                             'display' => 'Custom API origin',
-                                            'instructions' => 'Route events through your own proxy origin, for example `https://example.com`. A bare origin, not a full URL — the tracker appends its own path. Leave empty unless you have set a proxy up.',
+                                            'instructions' => 'If you route events through your own proxy, enter its origin here, for example `https://example.com`. Enter the origin only, without a path, because the tracker adds its own. Leave this empty if you have not set up a proxy.',
                                             'placeholder' => 'https://example.com',
                                             'width' => 50,
                                             'validate' => ['nullable', 'regex:#^https?://#i'],
