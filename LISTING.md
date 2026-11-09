@@ -4,17 +4,19 @@ The text a Marketplace product page needs, kept here so it has version
 control the product page itself does not. Keep it in step with the addon.
 
 **Status:** 🔴 **NOT YET SUBMITTED.** No statamic.com seller account exists
-(owner-held, per `RELEASING.md`), and a Marketplace product links a Packagist
-package that does not exist yet either. Nothing in this file has been tested
-against the live submission form.
+(see `RELEASING.md`), and a Marketplace product is created in the
+seller dashboard. The package it links is ready:
+`ciphera/statamic-pulse-analytics` serves v1.0.1 on Packagist, and the GitHub
+repository is public. Nothing in this file has been tested against the live
+submission form.
 
-## Prerequisites, as of 14-10-2026
+## Prerequisites, as of 09-11-2026
 
 | | State |
 |---|---|
-| Packagist listing | 🔴 not yet — `RELEASING.md` step 1 |
-| statamic.com seller account | 🔴 not yet — owner-held |
-| GitHub repository | 🔴 not yet — this repo was built with no remote, per this task's scope |
+| Packagist listing | ✅ `ciphera/statamic-pulse-analytics` serves v1.0.1 (on Packagist since 14-10-2026 as v1.0.0) |
+| statamic.com seller account | 🔴 not yet |
+| GitHub repository | ✅ public: `ciphera-net/pulse-statamic` |
 | Verified on current Statamic major | ✅ Statamic 6 (`^v6.0.0`), measured against `statamic/cms` v6.35.1 and `statamic/seo-pro`'s own constraint |
 | Licence | ✅ Apache-2.0 — `statamic/seo-pro` requires none, so this is a free choice, not a forced one (see `RELEASING.md`) |
 
@@ -24,46 +26,30 @@ against the live submission form.
 
 **Short description** (card/search-result length):
 
-> Privacy-first web analytics. No cookies, no IP addresses stored, and the script it adds to your pages is under 3 KB.
+> Pulse Analytics counts visitors without cookies or stored IP addresses. The script this addon adds to your pages is under 3 KB.
 
 **Long description:**
 
-Pulse Analytics adds privacy-first web analytics to a Statamic site with one
-addon. It sets no cookies, never stores IP addresses, and the script it adds to
-your pages is under 3 KB.
+Pulse Analytics adds privacy-first web analytics to a Statamic site with one addon. It sets no cookies and never stores IP addresses. The script it adds to your pages is under 3 KB.
 
 How it works
 
-1. `composer require ciphera/statamic-pulse-analytics`.
-2. Add `{{ pulse:tracker }}` inside `<head>` in your layout — the same way
-   you would add `{{ seo_pro:meta }}`.
-3. Optionally go to **Tools → Addons → Pulse Analytics** to pin a domain, turn
-   on interaction tracking, or route events through your own proxy. With
-   nothing configured, the tracker uses the browser's own hostname — correct
-   for a site served on one domain.
+1. Run `composer require ciphera/statamic-pulse-analytics`.
+2. Add `{{ pulse:tracker }}` inside `<head>` in your layout, the same way you would add `{{ seo_pro:meta }}`.
+3. Optionally go to **Tools → Addons → Pulse Analytics** to pin a domain, turn on interaction tracking, or route events through your own proxy. With nothing configured, the tracker uses the browser's own hostname, which is right for a site served on one domain.
 4. Your dashboard at pulse.ciphera.net shows visitors as they arrive.
 
 What it measures
 
-Pageviews, referrers, countries, devices, time on page and scroll depth, plus
-the goals, funnels and campaigns you set up, in one dashboard hosted in
-Switzerland. Visitors whose browser sends Do Not Track or Global Privacy
-Control are not counted at all.
+Pulse counts pageviews, referrers, countries, devices, time on page and scroll depth, plus the goals, funnels and campaigns you set up, in one dashboard hosted in Switzerland. It does not count visitors whose browser sends Do Not Track or Global Privacy Control.
 
 Settings
 
-A domain (validated at save time, so a typo is caught immediately rather than
-silently producing an install that reports nothing); a companion script for
-clicks, copies and form submits, loaded as a second request so you only pay
-for it if you want it; and a custom API origin, if you route events through
-your own proxy. Every setting can also be overridden per call on the tag
-itself, for a multi-site install.
+The domain is validated when you save, so a typo is caught at once and does not leave you with an install that reports nothing. A companion script for clicks, copies and form submits is optional. It loads as a second request, so you only pay for it if you want it. A custom API origin is there for sites that route events through their own proxy. On a multi-site install, every setting can be overridden per call on the tag itself.
 
 You need
 
-Statamic 6, PHP 8.2 or later, and a Pulse Analytics account with a site
-registered for the same domain. The free plan is enough to start — one site,
-5,000 pageviews a month, no card.
+Statamic 6, PHP 8.2 or later, and a Pulse Analytics account with a site registered for the same domain. The free plan is enough to start: it covers one site and 10,000 events a month, and you do not need a card.
 
 **Price:** Free.
 
@@ -73,8 +59,7 @@ registered for the same domain. The free plan is enough to start — one site,
 
 **Links:** Website `https://pulse.ciphera.net` · Documentation
 `https://docs.ciphera.net/pulse` · Source
-`https://github.com/ciphera-net/pulse-statamic` (not yet created — see
-Status above).
+`https://github.com/ciphera-net/pulse-statamic`.
 
 ## Icon
 
@@ -118,9 +103,10 @@ this task.
 
 Same facts as every other public Pulse integration's listing: Pulse Analytics
 is built by Ciphera BV, a company in Belgium; data is hosted in Switzerland;
-no cookies, no IP addresses stored; the tracking script is under 3 KB
-gzipped; free plan is one site, 5,000 pageviews a month, no card; Business
-plan from €11/month; every feature on every plan. Never a legal claim such as
+it sets no cookies and never stores IP addresses; the tracking script is under
+3 KB gzipped; the free plan covers one site and 10,000 events a month, with no
+card; Business starts at €9 a month with VAT; every plan has every feature.
+Never a legal claim such as
 "GDPR compliant", "no tracking" or "no consent banner needed", and never a
 point script-size figure — "under 3 KB" is the only size claim this addon or
 its listing makes.

@@ -2,9 +2,10 @@
 
 ## Status: on Packagist since 14-10-2026 — not yet on the Statamic Marketplace
 
-`v1.0.0` is tagged and `composer require ciphera/statamic-pulse-analytics`
-resolves from Packagist (account `ciphera`; a GitHub push hook keeps the
-listing current, so a new tag needs no manual step). The Statamic Marketplace
+`v1.0.0` was the first release and Packagist serves `v1.0.1` (measured
+09-11-2026): `composer require ciphera/statamic-pulse-analytics` resolves from
+Packagist (account `ciphera`; a GitHub push hook keeps the listing current, so a
+new tag needs no manual step). The Statamic Marketplace
 product (step 3 below) still needs a statamic.com seller account. The steps
 below were written before the first release and are kept as the record.
 
@@ -181,7 +182,7 @@ Then, on <https://packagist.org>, **Submit** the GitHub repository URL once a
 none — it was built with no remote, per this task's constraints). Packagist
 needs:
 
-- A packagist.org account (GitHub OAuth is the normal path) — **owner-held**,
+- A packagist.org account (GitHub OAuth is the normal path),
   same account every other public Pulse package publishes under.
 - A GitHub webhook on the repo (Packagist can install this itself once the
   account is linked), so a future tag auto-updates the listing with no manual
@@ -212,7 +213,7 @@ Per `statamic.dev/addons/building-an-addon` → "Publishing to the Marketplace":
 1. A packagist.org listing must exist first (step 1 above) — the Marketplace
    product links to it, it does not host the package itself.
 2. A **statamic.com seller account**, created at
-   `statamic.com/creator/begin` — **owner-held, not yet created.**
+   `statamic.com/creator/begin` (**not yet created**).
 3. In the seller dashboard, create a product: link the Packagist package,
    set the price (**free**, per this addon's whole premise — Pulse Analytics
    itself has a free plan), write the listing copy (`LISTING.md` carries it),
