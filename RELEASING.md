@@ -196,15 +196,16 @@ the moment this is done; nothing about it is reviewed.
 `ciphera-net/pulse-statamic`, created empty, this repository pushed to
 `main`. No branch protection decision has been made yet — follow the
 convention the rest of this queue's public repos use (`main` protected, PR
-required, 0 approvals) once a CI pipeline is wired up. **This addon has no CI
-pipeline of any kind yet.** Given `pulse-drupal`'s GitLab-native and
+required, 0 approvals) once a CI pipeline is wired up. **CI since 09-11-2026:
+Woodpecker runs the security scan, `composer install` and PHPUnit (Unit and
+Feature) on every pull request and push to `main`.** The reasoning that led
+there, kept for history: Given `pulse-drupal`'s GitLab-native and
 `pulse-joomla`/`pulse-typo3`'s "local harness only" precedents, and that
 `composer.json`'s own test suite (`vendor/bin/phpunit`) is the natural gate
 here, a CI job running `composer install && vendor/bin/phpunit --testsuite
 Unit` (the Feature suite needs the same heavier Statamic+Testbench install
 this file already measured as working, so there is no reason to leave it out
-of CI too) is the obvious next step before a real release — deliberately
-left undone here, since adding CI was not part of this task's scope.
+of CI too) was the obvious next step before a real release.
 
 ### 3. Statamic Marketplace — statamic.com/marketplace
 
