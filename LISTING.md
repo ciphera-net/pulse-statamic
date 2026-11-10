@@ -3,13 +3,15 @@
 The text a Marketplace product page needs, kept here so it has version
 control the product page itself does not. Keep it in step with the addon.
 
-**Status:** 🟡 **Draft on statamic.com, not yet submitted** (10-11-2026). The
-creator profile "Ciphera" exists, and its product 1104 holds every field below,
-the thumbnail and the three screenshots. Submitting needs one more thing: the
-statamic.com account's GitHub connection (Creator Shop → Settings → Source
-Control). The product's GitHub Repo field is required, and until GitHub is
-connected the repository lookup answers "Please reconnect GitHub in your
-Source Control settings."
+**Status:** 🟡 **Submitted, pending review** (10-11-2026, 22:08 UTC). Product 1104 on
+statamic.com holds every field below, the thumbnail and the three screenshots; its page reads "Awaiting review.
+Approval will publish your product." The draft preview (`statamic.com/addons/ciphera/pulse-analytics`) answers 404
+to anyone not signed in as the creator until then.
+
+The statamic.com account is connected to GitHub through the **Statamic Marketplace GitHub App**, installed on the
+`ciphera-net` organisation for **`pulse-statamic` only** (Creator Shop → Settings → Source Control shows "ciphera-net
+(Organisation)"); the repository lookup lists that one repository. The product's GitHub Repo field is
+`ciphera-net/pulse-statamic`.
 
 Statamic reviews every new product against its submission guidelines
 (`https://statamic.com/marketplace/submission-guidelines`, revised 02-11-2026),
@@ -21,8 +23,8 @@ product; that answer stays private to the review team.
 | | State |
 |---|---|
 | Packagist listing | ✅ `ciphera/statamic-pulse-analytics` serves v1.0.3 (on Packagist since 14-10-2026 as v1.0.0) |
-| statamic.com creator profile | ✅ "Ciphera", product 1104 saved as a draft |
-| GitHub connection on statamic.com | 🔴 not yet (required to submit) |
+| statamic.com creator profile | ✅ "Ciphera", product 1104 submitted 10-11-2026, pending review |
+| GitHub connection on statamic.com | ✅ the Statamic Marketplace GitHub App on `ciphera-net`, this repository only |
 | GitHub repository | ✅ public: `ciphera-net/pulse-statamic`, issues on (the product page's "Get Support" link opens them) |
 | Release notes | ✅ every tag has a GitHub Release; statamic.com builds the Release Notes tab from them |
 | Verified on current Statamic major | ✅ Statamic 6 (`^6.0`); the latest stable is v6.40.0 (10-11-2026), and `scripts/verify.sh` installs `statamic/statamic ^6.0` |
@@ -45,7 +47,8 @@ does it solve for them?** (private to the review team)
 > It is for Statamic site owners who use Pulse Analytics, our privacy-first analytics service, which sets no cookies and never stores IP addresses. Without the addon they paste the tracking tag into a template by hand and can mistype the domain without noticing. The addon gives them one {{ pulse:tracker }} tag for the layout, checks the domain when they save it, and lets each site on a multi-site install use its own settings. We also maintain Pulse integrations for WordPress, Drupal, Joomla, TYPO3 and Craft. Before each release we install this addon on a fresh Statamic 6 site and check the tag in the served HTML.
 
 **Product description:** "Write a description" (not the README, which is
-written for developers). Markdown:
+written for developers). Markdown, **ASCII only**: statamic.com decodes the description's UTF-8 as Latin-1, so on the
+preview of 10-11-2026 "→" showed as "â" and "€" as "â¬" (the same fault as the Odoo store). Write ">" and "euros":
 
 ````markdown
 Pulse Analytics adds privacy-first web analytics to a Statamic site with one addon. It sets no cookies and never stores IP addresses. The script it adds to your pages is under 3 KB.
@@ -54,7 +57,7 @@ Pulse Analytics adds privacy-first web analytics to a Statamic site with one add
 
 1. Run `composer require ciphera/statamic-pulse-analytics`.
 2. Add `{{ pulse:tracker }}` inside `<head>` in your layout, the same way you would add `{{ seo_pro:meta }}`.
-3. Optionally go to **Tools → Addons → Pulse Analytics** to pin a domain, turn on interaction tracking, or route events through your own proxy. With nothing configured, the tracker uses the browser's own hostname, which is right for a site served on one domain.
+3. Optionally open **Tools > Addons > Pulse Analytics** in the Control Panel to pin a domain, turn on interaction tracking, or route events through your own proxy. With nothing configured, the tracker uses the browser's own hostname, which is right for a site served on one domain.
 4. Your dashboard at [pulse.ciphera.net](https://pulse.ciphera.net) shows visitors as they arrive.
 
 ## What it measures
@@ -75,7 +78,7 @@ The domain is checked when you save, so a typo is caught at once. A mistyped dom
 
 ## Requirements
 
-You need Statamic 6, PHP 8.2 or later, and a Pulse Analytics account with a site registered for the same domain. The free plan is enough to start: it covers one site and 10,000 events a month, and you do not need a card. Past that, the Business plan starts at €9 a month with VAT.
+You need Statamic 6, PHP 8.2 or later, and a Pulse Analytics account with a site registered for the same domain. The free plan is enough to start: it covers one site and 10,000 events a month, and you do not need a card. Past that, the Business plan starts at 9 euros a month with VAT.
 ````
 
 **Media:** the thumbnail and the three screenshots below. No demo URL or video:
