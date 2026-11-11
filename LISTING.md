@@ -3,10 +3,10 @@
 The text a Marketplace product page needs, kept here so it has version
 control the product page itself does not. Keep it in step with the addon.
 
-**Status:** 🟡 **Submitted, pending review** (10-11-2026, 22:08 UTC). Product 1104 on
-statamic.com holds every field below, the thumbnail and the three screenshots; its page reads "Awaiting review.
-Approval will publish your product." The draft preview (`statamic.com/addons/ciphera/pulse-analytics`) answers 404
-to anyone not signed in as the creator until then.
+**Status:** 🟢 **Live on the Statamic Marketplace since 11-11-2026**:
+`https://statamic.com/addons/ciphera/pulse-analytics` (submitted 10-11-2026 at 22:08 UTC, approved overnight;
+statamic.com mailed "Pulse Analytics is live on the Marketplace!"). Product 1104 holds every field below, the
+thumbnail and the three screenshots; the public page was read back signed out on 11-11-2026.
 
 The statamic.com account is connected to GitHub through the **Statamic Marketplace GitHub App**, installed on the
 `ciphera-net` organisation for **`pulse-statamic` only** (Creator Shop → Settings → Source Control shows "ciphera-net
@@ -23,7 +23,7 @@ product; that answer stays private to the review team.
 | | State |
 |---|---|
 | Packagist listing | ✅ `ciphera/statamic-pulse-analytics` serves v1.0.3 (on Packagist since 14-10-2026 as v1.0.0) |
-| statamic.com creator profile | ✅ "Ciphera", product 1104 submitted 10-11-2026, pending review |
+| statamic.com creator profile | ✅ "Ciphera", product 1104 live since 11-11-2026 |
 | GitHub connection on statamic.com | ✅ the Statamic Marketplace GitHub App on `ciphera-net`, this repository only |
 | GitHub repository | ✅ public: `ciphera-net/pulse-statamic`, issues on (the product page's "Get Support" link opens them) |
 | Release notes | ✅ every tag has a GitHub Release; statamic.com builds the Release Notes tab from them |
