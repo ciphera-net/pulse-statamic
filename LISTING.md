@@ -6,7 +6,8 @@ control the product page itself does not. Keep it in step with the addon.
 **Status:** 🟢 **Live on the Statamic Marketplace since 11-11-2026**:
 `https://statamic.com/addons/ciphera/pulse-analytics` (submitted 10-11-2026 at 22:08 UTC, approved overnight;
 statamic.com mailed "Pulse Analytics is live on the Marketplace!"). Product 1104 holds every field below, the
-thumbnail and the three screenshots; the public page was read back signed out on 11-11-2026.
+thumbnail and the three screenshots; the public page was read back signed out on 11-11-2026. The summary and the
+description were saved again for 1.1.1 on 14-11-2026 and read back the same way.
 
 The statamic.com account is connected to GitHub through the **Statamic Marketplace GitHub App**, installed on the
 `ciphera-net` organisation for **`pulse-statamic` only** (Creator Shop → Settings → Source Control shows "ciphera-net
@@ -30,7 +31,7 @@ product; that answer stays private to the review team.
 | Verified on current Statamic major | ✅ Statamic 6 (`^6.0`); the latest stable is v6.40.0 (10-11-2026), and `scripts/verify.sh` installs `statamic/statamic ^6.0` |
 | Licence | ✅ Apache-2.0 (`statamic/seo-pro` requires none, so this is a free choice, not a forced one; see `RELEASING.md`) |
 
-## Listing fields, as saved on 10-11-2026
+## Listing fields, as saved on 14-11-2026
 
 **Name:** Pulse Analytics. **Slug:** `pulse-analytics`
 (`statamic.com/addons/ciphera/pulse-analytics`). **Type:** Addon.
@@ -47,7 +48,8 @@ does it solve for them?** (private to the review team)
 > It is for Statamic site owners who use Pulse Analytics, our privacy-first analytics service, which sets no cookies and never stores IP addresses. Without the addon they paste the tracking tag into a template by hand and can mistype the domain without noticing. The addon gives them one {{ pulse:tracker }} tag for the layout, checks the domain when they save it, and lets each site on a multi-site install use its own settings. We also maintain Pulse integrations for WordPress, Drupal, Joomla, TYPO3 and Craft. Before each release we install this addon on a fresh Statamic 6 site and check the tag in the served HTML.
 
 **Product description:** "Write a description" (not the README, which is
-written for developers). Markdown, **ASCII only**: statamic.com decodes the description's UTF-8 as Latin-1, so on the
+written for developers). Since 14-11-2026 the field is a rich-text editor that reads and writes Markdown, so the
+block below goes in as it is. Markdown, **ASCII only**: statamic.com decodes the description's UTF-8 as Latin-1, so on the
 preview of 10-11-2026 "→" showed as "â" and "€" as "â¬" (the same fault as the Odoo store). Write ">" and "euros":
 
 ````markdown
@@ -57,7 +59,7 @@ Pulse Analytics adds privacy-first web analytics to a Statamic site with one add
 
 1. Run `composer require ciphera/statamic-pulse-analytics`.
 2. Add `{{ pulse:tracker }}` inside `<head>` in your layout, the same way you would add `{{ seo_pro:meta }}`.
-3. Optionally open **Tools > Addons > Pulse Analytics** in the Control Panel to pin a domain, turn on interaction tracking, or route events through your own proxy. With nothing configured, the tracker uses the browser's own hostname, which is right for a site served on one domain.
+3. Optionally open **Tools > Addons > Pulse Analytics** in the Control Panel to pin a domain or route events through your own proxy. With nothing configured, the tracker uses the browser's own hostname, which is right for a site served on one domain.
 4. Your dashboard at [pulse.ciphera.net](https://pulse.ciphera.net) shows visitors as they arrive.
 
 ## What it measures
