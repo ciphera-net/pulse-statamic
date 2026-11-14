@@ -39,7 +39,7 @@ product; that answer stays private to the review team.
 
 **Summary:**
 
-> Pulse Analytics counts visitors without cookies or stored IP addresses. The script this addon adds to your pages is under 3 KB.
+> Pulse Analytics counts visitors without cookies or stored IP addresses. The script this addon adds to your pages is about 3 KB.
 
 **Who is using this product, or has specifically asked for it, and what problem
 does it solve for them?** (private to the review team)
@@ -51,7 +51,7 @@ written for developers). Markdown, **ASCII only**: statamic.com decodes the desc
 preview of 10-11-2026 "→" showed as "â" and "€" as "â¬" (the same fault as the Odoo store). Write ">" and "euros":
 
 ````markdown
-Pulse Analytics adds privacy-first web analytics to a Statamic site with one addon. It sets no cookies and never stores IP addresses. The script it adds to your pages is under 3 KB.
+Pulse Analytics adds privacy-first web analytics to a Statamic site with one addon. It sets no cookies and never stores IP addresses. The script it adds to your pages is about 3 KB.
 
 ## How it works
 
@@ -70,10 +70,12 @@ The tag loads the tracker from js.ciphera.net. The tracker sends each pageview a
 
 ## Settings
 
-The domain is checked when you save, so a typo is caught at once. A mistyped domain would otherwise leave you with an install that reports nothing. A companion script for clicks, copies and form submits is optional. It loads as a second request, so a site that leaves it off never downloads it. A custom API origin is there for sites that route events through their own proxy. On a multi-site install, every setting can be overridden per call on the tag itself:
+The domain is checked when you save, so a typo is caught at once. A mistyped domain would otherwise leave you with an install that reports nothing. A custom API origin is there for sites that route events through their own proxy. Scroll depth, outbound links, file downloads, and clicks, copies and form submits are each switched on or off in your site's settings in Pulse (Settings > General). The tag stays the same, so there is nothing to change here.
+
+On a multi-site install, every setting can be overridden per call on the tag itself:
 
 ```antlers
-{{ pulse:tracker domain="example.com" companion="true" api="https://proxy.example.com" }}
+{{ pulse:tracker domain="example.com" api="https://proxy.example.com" }}
 ```
 
 ## Requirements
@@ -130,10 +132,10 @@ kept outside this repository.
 
 Same facts as every other public Pulse integration's listing: Pulse Analytics
 is built by Ciphera BV, a company in Belgium; data is hosted in Switzerland;
-it sets no cookies and never stores IP addresses; the tracking script is under
+it sets no cookies and never stores IP addresses; the tracking script is about
 3 KB gzipped; the free plan covers one site and 10,000 events a month, with no
 card; Business starts at €9 a month with VAT; every plan has every feature.
 Never a legal claim such as
 "GDPR compliant", "no tracking" or "no consent banner needed", and never a
-point script-size figure — "under 3 KB" is the only size claim this addon or
+point script-size figure — "about 3 KB" is the only size claim this addon or
 its listing makes.

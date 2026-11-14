@@ -85,7 +85,7 @@ final class TagBuilderTest extends TestCase
         // still carry something that was never through that check, so this is
         // the one place in the tag that genuinely depends on escaping rather
         // than on a value shape that cannot carry the dangerous characters.
-        $tag = TagBuilder::buildTag('', false, 'https://evil.example.com"><script>alert(1)</script>');
+        $tag = TagBuilder::buildTag('', 'https://evil.example.com"><script>alert(1)</script>');
 
         $this->assertStringNotContainsString('"><script>', $tag);
         $this->assertStringContainsString(
@@ -98,7 +98,7 @@ final class TagBuilderTest extends TestCase
     {
         $this->assertSame(
             '<script defer data-domain="example.com" data-api="https://proxy.example.com" src="https://js.ciphera.net/script.js"></script>',
-            TagBuilder::buildTag('example.com', false, 'https://proxy.example.com')
+            TagBuilder::buildTag('example.com', 'https://proxy.example.com')
         );
     }
 
@@ -107,28 +107,24 @@ final class TagBuilderTest extends TestCase
         $this->assertStringNotContainsString('data-api', TagBuilder::buildTag('example.com'));
     }
 
-    public function test_the_companion_is_a_separate_tag_and_carries_no_domain(): void
+    public function test_emits_one_tag_and_no_flag_attributes(): void
     {
-        $tag = TagBuilder::buildTag('example.com', true);
-        $lines = explode("\n", $tag);
+        $tag = TagBuilder::buildTag('example.com', 'https://proxy.example.com');
 
-        $this->assertCount(2, $lines);
-        $this->assertSame(
-            '<script defer src="https://js.ciphera.net/script.interactions.js"></script>',
-            $lines[1]
-        );
-        $this->assertSame(1, substr_count($tag, 'data-domain='));
+        $this->assertSame(1, substr_count($tag, '<script'));
+        $this->assertStringNotContainsString('interactions', $tag);
+        $this->assertDoesNotMatchRegularExpression('/data-(no|ignore)-/', $tag);
+        $this->assertStringContainsString('data-api="https://proxy.example.com"', $tag);
     }
 
-    public function test_no_companion_by_default(): void
+    public function test_there_is_no_companion_url(): void
     {
-        $this->assertStringNotContainsString('interactions', TagBuilder::buildTag('example.com'));
+        $this->assertFalse(defined(TagBuilder::class.'::COMPANION_URL'));
     }
 
     public function test_points_at_js_ciphera_net_and_nowhere_else(): void
     {
         $this->assertSame('https://js.ciphera.net/script.js', TagBuilder::SCRIPT_URL);
-        $this->assertSame('https://js.ciphera.net/script.interactions.js', TagBuilder::COMPANION_URL);
     }
 
     public function test_nothing_it_emits_is_an_inline_script(): void
@@ -138,7 +134,7 @@ final class TagBuilderTest extends TestCase
         // and no 'unsafe-inline' for this addon. Pin it here so a future
         // change cannot silently add inline JavaScript without a test
         // noticing.
-        foreach (explode("\n", TagBuilder::buildTag('example.com', true, 'https://proxy.example.com')) as $line) {
+        foreach (explode("\n", TagBuilder::buildTag('example.com', 'https://proxy.example.com')) as $line) {
             $this->assertMatchesRegularExpression(
                 '#^<script [^>]*src="https://js\.ciphera\.net/[^"]+"></script>$#',
                 $line

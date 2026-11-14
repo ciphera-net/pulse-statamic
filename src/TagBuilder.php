@@ -11,8 +11,7 @@ namespace Ciphera\StatamicPulseAnalytics;
  * without booting Statamic, and so it can be read side by side with the same
  * decisions in the Drupal, Joomla and TYPO3 integrations.
  *
- * The URLs, the domain grammar and the rule that the companion script is a
- * SECOND request are copied from those integrations rather than re-derived.
+ * The URLs and the domain grammar are copied from those integrations rather than re-derived.
  * Pulse integrations disagreeing about what the tag looks like is a drift bug
  * waiting to happen.
  */
@@ -22,11 +21,6 @@ final class TagBuilder
      * The Pulse tracker.
      */
     public const SCRIPT_URL = 'https://js.ciphera.net/script.js';
-
-    /**
-     * The companion script: clicks, copies and form submits.
-     */
-    public const COMPANION_URL = 'https://js.ciphera.net/script.interactions.js';
 
     /**
      * A registrable hostname.
@@ -75,17 +69,16 @@ final class TagBuilder
      *     attribute short. Callers are expected to have already run this
      *     through normalizeDomain(), but an unnormalised value that still
      *     validates will render as given.
-     * @param  bool  $companion  Whether to also emit the companion script.
      * @param  string  $api  A custom API origin, or '' for the default.
      *     Trailing slashes are not stripped here — callers do that, the same
      *     place they decide the value came from a trusted setting.
-     * @return string  One or two <script> tags, newline-joined. Never a
+     * @return string  One <script> tag. Never a
      *     self-closing tag: a self-closed <script> swallows the rest of the
      *     head in every browser, which is why this always writes an explicit
      *     closing tag rather than leaning on a templating engine's attribute
      *     renderer to decide.
      */
-    public static function buildTag(string $domain = '', bool $companion = false, string $api = ''): string
+    public static function buildTag(string $domain = '', string $api = ''): string
     {
         $html = '<script defer';
 
@@ -98,13 +91,6 @@ final class TagBuilder
         }
 
         $html .= ' src="'.self::SCRIPT_URL.'"></script>';
-
-        if ($companion) {
-            // No data-domain on the companion: the tracker resolves the
-            // domain once, from the core script, and a second copy is a
-            // second thing to keep in step.
-            $html .= "\n".'<script defer src="'.self::COMPANION_URL.'"></script>';
-        }
 
         return $html;
     }

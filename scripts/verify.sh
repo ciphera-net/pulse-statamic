@@ -136,9 +136,9 @@ fi
 
 FAILURES=0
 CORE='https://js\.ciphera\.net/script\.js'
-COMP='https://js\.ciphera\.net/script\.interactions\.js'
 
 write_settings() {
+  # $1 domain  $2 api  $3 any value = also store the retired `companion` key
   # The exact file FileSettingsRepository reads: resources/addons/<slug>.yaml.
   # Writing it directly is the same mechanism Tools -> Addons saves through —
   # it is not a shortcut around the real persistence path, it is that path,
@@ -146,8 +146,8 @@ write_settings() {
   # or the real config file rather than driving a browser.
   docker exec -i "$APP_CONTAINER" sh -c "mkdir -p resources/addons && cat > resources/addons/statamic-pulse-analytics.yaml" <<YAML
 domain: '$1'
-companion: $2
-api: '$3'
+api: '$2'
+${3:+companion: true}
 YAML
 }
 
@@ -206,20 +206,19 @@ docker exec "$APP_CONTAINER" sh -c '
 
 echo "==> checking the served HTML"
 
-write_settings "example.com" "false" ""
+write_settings "example.com" ""
 check "domain only" \
   "<script defer data-domain=\"example\.com\" src=\"$CORE\"></script>" \
   ""
 
-write_settings "chosen.dev" "true" "https://proxy.example.com"
-# grep -oE extracts one match per line, and tr '\n' ' ' joins them with
-# exactly one space — so the two tags are expected one literal space apart,
-# the same convention the Joomla and TYPO3 harnesses in this queue use.
-check "domain + api + companion, companion carries no domain" \
-  "<script defer data-domain=\"chosen\.dev\" data-api=\"https://proxy\.example\.com\" src=\"$CORE\"></script> <script defer src=\"$COMP\"></script>" \
-  ""
+write_settings "chosen.dev" "https://proxy.example.com" stale
+# A stale `companion: true` is stored on purpose: it must be ignored, so the
+# page carries exactly one tag.
+check "domain + api: one tag, no companion, no flag attributes" \
+  "<script defer data-domain=\"chosen\.dev\" data-api=\"https://proxy\.example\.com\" src=\"$CORE\"></script>\$" \
+  "interactions|data-no-|data-ignore-"
 
-write_settings "" "false" ""
+write_settings "" ""
 check "no domain configured means auto-detect, not a broken attribute" \
   "^<script defer src=\"$CORE\"></script>\$" \
   "data-domain"
@@ -228,7 +227,7 @@ check "no domain configured means auto-detect, not a broken attribute" \
 # return true unconditionally, the value below is treated as valid and
 # injected verbatim — the must-NOT-match assertion fails, which is what
 # proves the guard was real in normal mode.
-write_settings 'bad" onload="x' "false" ""
+write_settings 'bad" onload="x' ""
 check "an invalid domain is dropped, never injected" \
   "^<script defer src=\"$CORE\"></script>\$" \
   "onload"
