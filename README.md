@@ -2,7 +2,7 @@
 
 This addon adds privacy-first analytics to a Statamic site. Pulse Analytics
 sets no cookies and never stores IP addresses, and the script the addon adds to
-your pages is under 3 KB.
+your pages is about 3 KB.
 
 [Pulse Analytics](https://pulse.ciphera.net) is built by
 [Ciphera](https://ciphera.net), a company in Belgium, and hosted in
@@ -40,7 +40,6 @@ as tag parameters (see below).
 | Setting | Default | What it does |
 |---|---|---|
 | Domain | empty | The domain this site is registered under in Pulse. Empty means auto-detect. |
-| Record clicks, copies and form submits | off | Loads the companion script as a second, separate request (see below). |
 | Custom API origin | empty | Route events through your own proxy origin. Enter the origin only, without a path. |
 
 ### Per-call overrides
@@ -50,7 +49,7 @@ multi-site install where one site needs a different domain or proxy than
 whatever is saved in Tools → Addons:
 
 ```antlers
-{{ pulse:tracker domain="example.com" companion="true" api="https://proxy.example.com" }}
+{{ pulse:tracker domain="example.com" api="https://proxy.example.com" }}
 ```
 
 ## Four things worth knowing
@@ -78,9 +77,7 @@ tag only ever executes where you call it, in a front-end layout or template.
 Admin exclusion here is structural, and a toggle that could never do anything
 would be worse than no toggle at all.
 
-**The interaction capture is a second request on purpose.** The core
-script's size is a published claim, and nothing is folded into it to make a
-feature look free.
+**The site's settings in Pulse decide what the script records.** Scroll depth, outbound links, file downloads, and clicks, copies and form submits are each switched on or off in your site's settings in Pulse (Settings > General). The tag stays the same, so there is nothing to change here.
 
 **A mistyped domain is rejected at the settings form** instead of being saved
 and quietly dropped. An analytics install that reports nothing while looking

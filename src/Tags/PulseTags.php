@@ -18,7 +18,10 @@ use Statamic\Tags\Tags;
  * multi-site install where one site needs a different domain or proxy than
  * whatever is saved:
  *
- *     {{ pulse:tracker domain="example.com" companion="true" }}
+ *     {{ pulse:tracker domain="example.com" }}
+ *
+ * A template that still passes companion="true" from an older version keeps
+ * rendering: the parameter is ignored.
  */
 class PulseTags extends Tags
 {
@@ -41,12 +44,10 @@ class PulseTags extends Tags
         $domain = (string) $this->params->get('domain', $settings->get('domain', ''));
         $domain = TagBuilder::normalizeDomain($domain);
 
-        $companion = $this->params->bool('companion', (bool) $settings->get('companion', false));
-
         $api = (string) $this->params->get('api', $settings->get('api', ''));
         $api = rtrim(trim($api), '/');
 
-        return TagBuilder::buildTag($domain, $companion, $api);
+        return TagBuilder::buildTag($domain, $api);
     }
 
     /**

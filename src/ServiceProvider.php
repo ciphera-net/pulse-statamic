@@ -41,16 +41,6 @@ class ServiceProvider extends AddonServiceProvider
                                         ],
                                     ],
                                     [
-                                        'handle' => 'companion',
-                                        'field' => [
-                                            'type' => 'toggle',
-                                            'display' => 'Record clicks, copies and form submits',
-                                            'instructions' => 'This adds a second script as a separate request, so your pages only load it when you switch this on.',
-                                            'default' => false,
-                                            'width' => 50,
-                                        ],
-                                    ],
-                                    [
                                         'handle' => 'api',
                                         'field' => [
                                             'type' => 'text',

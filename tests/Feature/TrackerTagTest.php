@@ -109,25 +109,26 @@ final class TrackerTagTest extends AddonTestCase
         );
     }
 
-    public function test_reads_the_saved_companion_and_api_settings(): void
+    public function test_reads_the_saved_domain_and_api_settings_as_one_tag(): void
     {
         $this->setSetting('domain', 'chosen.dev');
-        $this->setSetting('companion', true);
         $this->setSetting('api', 'https://proxy.example.com');
-
-        $html = $this->render('{{ pulse:tracker }}');
-        $lines = explode("\n", $html);
 
         $this->assertSame(
             '<script defer data-domain="chosen.dev" data-api="https://proxy.example.com" src="https://js.ciphera.net/script.js"></script>',
-            $lines[0]
+            $this->render('{{ pulse:tracker }}')
         );
-        $this->assertSame(
-            '<script defer src="https://js.ciphera.net/script.interactions.js"></script>',
-            $lines[1]
-        );
-        // The companion never carries a domain of its own.
-        $this->assertSame(1, substr_count($html, 'data-domain='));
+    }
+
+    public function test_a_stored_companion_value_and_an_old_companion_parameter_are_ignored(): void
+    {
+        $this->setSetting('domain', 'chosen.dev');
+        $this->setSetting('companion', true);
+
+        $expected = '<script defer data-domain="chosen.dev" src="https://js.ciphera.net/script.js"></script>';
+
+        $this->assertSame($expected, $this->render('{{ pulse:tracker }}'));
+        $this->assertSame($expected, $this->render('{{ pulse:tracker companion="true" }}'));
     }
 
     public function test_tag_parameters_override_saved_settings(): void
@@ -167,7 +168,7 @@ final class TrackerTagTest extends AddonTestCase
             ->all();
 
         $validator = \Illuminate\Support\Facades\Validator::make(
-            ['domain' => 'not a hostname', 'companion' => false, 'api' => ''],
+            ['domain' => 'not a hostname', 'api' => ''],
             $rules
         );
 
@@ -184,7 +185,7 @@ final class TrackerTagTest extends AddonTestCase
             ->all();
 
         $validator = \Illuminate\Support\Facades\Validator::make(
-            ['domain' => 'example.com', 'companion' => false, 'api' => ''],
+            ['domain' => 'example.com', 'api' => ''],
             $rules
         );
 
@@ -200,7 +201,7 @@ final class TrackerTagTest extends AddonTestCase
             ->all();
 
         $validator = \Illuminate\Support\Facades\Validator::make(
-            ['domain' => '', 'companion' => false, 'api' => 'proxy.example.com'],
+            ['domain' => '', 'api' => 'proxy.example.com'],
             $rules
         );
 
@@ -211,7 +212,6 @@ final class TrackerTagTest extends AddonTestCase
     public function test_nothing_it_emits_is_an_inline_script(): void
     {
         $this->setSetting('domain', 'example.com');
-        $this->setSetting('companion', true);
         $this->setSetting('api', 'https://proxy.example.com');
 
         $html = $this->render('{{ pulse:tracker }}');

@@ -80,9 +80,10 @@ person does not have to re-discover it.
 
 ## 🔑 A multi-line tag return comes back through Antlers with `\r\n`, not `\n`
 
-`TagBuilder::buildTag()` joins the tracker tag and the companion tag with a
-bare `"\n"`. Measured with `bin2hex()` on the rendered output: Antlers hands
-it back with the join rewritten to `\r\n`. Confirmed harmless — two sibling
+Before 1.1.0, `TagBuilder::buildTag()` joined the tracker tag and a companion tag
+with a bare `"\n"`. Measured with `bin2hex()` on the rendered output: Antlers handed
+it back with the join rewritten to `\r\n`. The addon emits one tag now, so the
+`render()` helper's normalisation is kept only as a guard. Confirmed harmless — two sibling
 `<script>` elements parse identically regardless of the byte between them,
 and nothing in this addon's contract depends on it — but it is exactly the
 shape of finding this queue has paid for before (Docusaurus re-serialising
